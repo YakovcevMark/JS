@@ -19,28 +19,31 @@ console.log(prepend(10, prepend(20, null)));
 // → {value: 10, rest: {value: 20, rest: null}}
 console.log(nth(arrayToList([10, 20, 30]), 1));
 // → 20
+**********************
+Can you implement recreate reduceRight function by using for loop?
+**********************
  */
 "use strict";
 function arrayToList(array){
-    return array.reduceRight((rest,value) => ({value, rest}), null);
+    let list = null;
+    for (let i = array.length -1; i >= 0; i--)
+        list = { value: array[i], rest: list };
+    return list;
 }
 function listToArray(list){
     let array = [];
     for (let item = list; item; item = item.rest)
         array.push(item.value);
-     return array;
+    return array;
 }
 function prepend(item,list){
     return { value: item, rest: list };
 }
 function nth(list,index){
-    if (!list || index < 0)
-        return undefined;
-    if (index === 0 )
-        return list.value;
-    return  nth(list.rest,--index);
+    if (!list || index < 0) return;
+    if (index === 0 ) return list.value;
+    return nth(list.rest,--index);
 }
-let myList = arrayToList([10, 20]);
 console.log(arrayToList([10, 20]));
 console.log(listToArray(arrayToList([10, 20, 30])));
 console.log(prepend(10, prepend(20, null)));

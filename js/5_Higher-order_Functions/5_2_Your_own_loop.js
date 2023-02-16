@@ -14,11 +14,13 @@ loop(3, n => n > 0, n => n - 1, console.log);
 // → 3
 // → 2
 // → 1
+*******************
+Why you need to return false here?
+*******************
  */
 "use strict";
 function loop (item, test, update, action){
     for (let i = item; test(i); i = update(i))
         action(i);
-    return false;
 }
 loop(3, n => n > 0, n => n - 1, console.log);

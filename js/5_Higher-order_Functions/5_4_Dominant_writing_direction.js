@@ -16,6 +16,9 @@ console.log(dominantDirection("Hello!"));
 // → ltr
 console.log(dominantDirection("Hey, مساء الخير"));
 // → rtl
+****************************
+Is there a function to generate one value from an array?
+****************************
  */
 "use strict";
 const SCRIPTS = require('../5_Higher-order_Functions/scripts.js');
@@ -47,16 +50,9 @@ function dominantDirection(text) {
         let script = characterScript(char.codePointAt(0));
         return script ? script.direction : "none";
     }).filter(({name}) => name !== "none");
-
-    let max = counts[0];
-
-    for (let item of counts )
-        if ( max.count < item.count)
-            max = item;
-
+    let max = counts.reduce((a,b) => { return a.count > b.count ? a : b }, 0);
     return max ? max.name : null;
 }
-
 console.log(dominantDirection("Hello!"));
 console.log(dominantDirection(""));
 console.log(dominantDirection("Hey, مساء الخير"));

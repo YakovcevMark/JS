@@ -22,27 +22,19 @@ console.log(isEven(75));
 console.log(isEven(-1));
 // → ??
 ***********
-Не особо понимаю чего конкретно в этой задаче от меня хотят..
-Исправить проблему отрицательных чисел и обрабатывать
-их как и положительные?
-Или выдавать сообщение о ошибке и закрывать функцию?
+Как короче записать выражение number * -1 ?
 ***********
 
  */
 "use strict"
 function isEven(number){
-    if (number < 0)
-        number = number * -1;
-    if (number === 1)
-        return false;
-    if (number === 0)
-        return true;
-
-
+    if (number === 1) return false;
+    if (number === 0) return true;
+    if (number < 0) number *= -1;
     return isEven(number-2);
 }
 
 console.log(isEven(50));
 console.log(isEven(75));
-console.log(isEven(-3));
+console.log(isEven(-2));
 
