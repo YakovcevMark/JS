@@ -23,6 +23,7 @@ console.log(isEven(-1));
 // → ??
 ***********
 Как короче записать выражение number * -1 ?
+-number
 ***********
 
  */
@@ -30,7 +31,7 @@ console.log(isEven(-1));
 function isEven(number){
     if (number === 1) return false;
     if (number === 0) return true;
-    if (number < 0) number *= -1;
+    if (number < 0) number = -number;
     return isEven(number-2);
 }
 

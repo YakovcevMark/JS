@@ -25,15 +25,19 @@ group.add(10);
 group.delete(10);
 console.log(group.has(10));
 // → false
+***********************
+Constructor might create an empty group.
+Why you need a return statement here?
+***********************
  */
 "use strict";
 class Group {
     values = [];
-    constructor() {
-        return this;
-    }
     add(item){
-        if (!this.values.includes(item))
+        /*
+        Reuse has(item) function here.
+         */
+        if (!this.has(item))
             this.values.push(item);
     }
     delete(item){
@@ -46,9 +50,11 @@ class Group {
     }
     static from(temp){
         let group = new Group();
-        for (let i = 0; i < temp?.length; i++)
-            group.add(temp[i]);
-         return group;
+        /*
+        You need index only to access array's item. You don't use for each here?
+         */
+        if (temp) temp.forEach(item => group.add(item));
+        return group;
     }
 }
 let group = Group.from([10, 20]);

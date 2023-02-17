@@ -18,6 +18,10 @@ console.log(new Vec(1, 2).minus(new Vec(2, 3)));
 // → Vec{x: -1, y: -1}
 console.log(new Vec(3, 4).length);
 // → 5
+***********************
+Here you really need to assign value to this.x before sending it to the constructor?
+this.x += vec.x the same as this.x = this.x + vec.x
+***********************
  */
 class Vec{
     constructor(x, y) {
@@ -25,10 +29,10 @@ class Vec{
         this.y = y;
     }
     plus(vec){
-        return new Vec(this.x += vec.x,this.y += vec.y);
+        return new Vec(this.x + vec.x,this.y + vec.y);
     }
     minus(vec){
-        return new Vec(this.x -= vec.x,this.y -= vec.y);
+        return new Vec(this.x - vec.x,this.y - vec.y);
     }
     get length(){
         return Math.sqrt(this.x**2 + this.y**2);

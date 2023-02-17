@@ -33,6 +33,11 @@ arr = [1, 2, 3 ... 1000000].
 In case of array = [1, 2, 3, 4, 5] the function will take 3 from array[2],
 put it in temp variable and then put it back to the array[2].
 Please get rid of this redundant step.
+
+You didn't really understand what I meant by "get rid of this redundant step". It's ok to store temporary value in variable.
+If you debug your function with array == [1,2,3,4,5] you can find that array.length / 2 == 2.5.
+It means that the code inside the for loop will be executed when i == 0, 1 and 2 because 2 < 2.5.
+I wanted you to skip the step when i == 2 because you don't need to swap middle element of the array (if the array.length is odd number).
 *******************
  */
 "use strict";
@@ -43,7 +48,7 @@ function reverseArray(array){
     return answer;
 }
 function reverseArrayInPlace(array){
-    for (let i = 0; i < array.length / 2; i++)
+    for (let i = 0; i < Math.floor(array.length / 2); i++)
         [array[i], array[array.length - i - 1]] = [array[array.length - i - 1], array[i]];
 }
 

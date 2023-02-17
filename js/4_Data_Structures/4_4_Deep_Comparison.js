@@ -16,17 +16,19 @@ console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
 *******************
 Works well, but there is too many nested ifs and too much nesting.
 Please rework it with so called guard clauses.
+
+Too many parentheses, too complex condition. On this stage of the program (after if (a === b) return true;) you can return false if any of the objects is null or any of the objects is not an object.
+if(a == null || b == null || typeof a != "object" || typeof b != "object") return false;
+Keep it simple when you use guard clauses.
 *******************
  */
 "use strict";
 function deepEqual(a,b){
     if (a === b) return true;
-    if (!((typeof a == "object" && a != null) && (typeof b == "object" && b != null))) return false;
+    if (a == null || b == null || typeof a != "object" || typeof b != "object") return false;
     if (Object.keys(a).length !== Object.keys(b).length) return false;
-    for (let key in a) {
-        if (!(key in b)) return false;
-        if (!deepEqual(a[key], b[key])) return false;
-    }
+    for (let key in a)
+        if (!(key in b) || !deepEqual(a[key], b[key]) ) return false;
     return true;
 }
 
