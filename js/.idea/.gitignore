@@ -1,6 +1,9 @@
 # Default ignored files
 /shelf/
 .idea/
+../11_Asynchronous_Programming/
+#../11_Asynchronous_Programming/crow-tech.js
+#../11_Asynchronous_Programming/9_1_Tracking_the_scalpel.js
 /workspace.xml
 # Editor-based HTTP Client requests
 /httpRequests/

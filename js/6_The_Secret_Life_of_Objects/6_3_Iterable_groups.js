@@ -18,9 +18,8 @@ for (let value of Group.from(["a", "b", "c"])) {
  */
 "use strict";
 class Group {
-    values = [];
-    constructor() {
-        return this;
+    constructor(){
+        this.values = [];
     }
     add(item){
         if (!this.values.includes(item))

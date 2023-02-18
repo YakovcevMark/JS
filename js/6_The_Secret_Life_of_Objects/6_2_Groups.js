@@ -32,7 +32,13 @@ Why you need a return statement here?
  */
 "use strict";
 class Group {
-    values = [];
+    /*
+    It's completely valid, but task said "Its constructor creates an empty group".
+    So please make the constructor to create this class member and assign [] value to it.
+     */
+    constructor(){
+        this.values = [];
+    }
     add(item){
         /*
         Reuse has(item) function here.
