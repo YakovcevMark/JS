@@ -165,7 +165,6 @@ function anyStorage(nest, source, name) {
 async function locateScalpel(nest) {
     let current = nest.name;
     for (;;){
-
     }
 
 }
