@@ -1,0 +1,51 @@
+<!--
+In this exercise you must implement a simple tabbed interface.
+Write a function, asTabs, that takes a DOM node and creates a tabbed
+interface showing the child elements of that node.
+It should insert a list of <button> elements at the top of the node,
+one for each child element, containing text retrieved from the
+data-tabname attribute of the child. All but one of the original
+children should be hidden (given a display style of none).
+The currently visible node can be selected by clicking the buttons.
+
+When that works, extend it to style the button for the currently
+selected tab differently so that it is obvious which tab is selected.
+-->
+<!DOCTYPE HTML>
+<html>
+    <body>
+    <tab-panel>
+        <div data-tabname="one">Tab one</div>
+        <div data-tabname="two">Tab two</div>
+        <div data-tabname="three">Tab three</div>
+    </tab-panel>
+    <script>
+        function asTabs(node) {
+            let elements = Array.from(node.children);
+            let div = document.createElement("div");
+            let list = [];
+            for (let element of elements){
+                element.style.display = "none";
+                let button = document.createElement("button");
+                button.textContent = element.getAttribute("data-tabname");
+                button.addEventListener("click", () => onClick(element))
+                list.push({element, button});
+                div.appendChild(button);
+            }
+            node.insertBefore(div, node.firstChild);
+            function onClick(element) {
+                for (let item of list){
+                    if (item.element === element){
+                        item.element.style.display = "block";
+                        item.button.style.backgroundColor = "green";
+                    } else {
+                        item.element.style.display = "none";
+                        item.button.style.backgroundColor = "";
+                    }
+                }
+            }
+        }
+        asTabs(document.querySelector("tab-panel"));
+    </script>
+    </body>
+</html>
