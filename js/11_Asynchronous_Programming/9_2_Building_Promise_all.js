@@ -27,6 +27,7 @@ function Promise_all(promises) {
     });
 }
 
+
 // Test code.
 Promise_all([]).then(array => {
     console.log("This should be []:", array);

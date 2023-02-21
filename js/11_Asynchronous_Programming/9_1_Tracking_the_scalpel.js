@@ -165,13 +165,25 @@ function anyStorage(nest, source, name) {
 async function locateScalpel(nest) {
     let current = nest.name;
     for (;;){
+        let secondNest = await anyStorage(nest,current,"scalpel")
+        if (secondNest === current) return current;
+        current = secondNest;
     }
 
 }
-
 function locateScalpel2(nest) {
-
+    return new Promise(resolve => {
+        let current = nest.name;
+        function find(current) {
+            new Promise(resolve => {
+                resolve(anyStorage(nest, current, "scalpel"));
+            }).then(result => {
+                if (result === current) resolve(current);
+                else find(result);
+            });
+        }
+       find(current);
+    });
 }
-
-locateScalpel(bigOak).then(console.log);
+locateScalpel2(bigOak).then(console.log);
 // → Butcher Shop
