@@ -39,17 +39,29 @@ class Group {
             group.add(temp[i]);
         return group;
     }
+}
+/*
+Could you extract iterator to separated class GroupIterator.
+Please give your variables self explanatory names.
+this.current is what? Current group, item, index?
+ */
+class GroupIterator extends Group{
+    constructor(group){
+        super();
+        this.values = group.values;
+    }
     [Symbol.iterator]() {
-        this.current = -1;
+        this.currentItem = -1;
         return this;
     }
     next() {
-        if (this.current === this.values[this.values.length -1])
+        if (this.currentItem === this.values[this.values.length -1])
             return {done: true};
-        this.current = this.values[this.values.indexOf(this.current) + 1];
-        return {value: this.current, done: false};
+        this.currentItem = this.values[this.values.indexOf(this.currentItem) + 1];
+        return {value: this.currentItem, done: false};
     }
+
 }
-for (let value of Group.from([10, 20, 30])) {
+for (let value of new GroupIterator(Group.from([10, 20, 30]))) {
     console.log(value);
 }

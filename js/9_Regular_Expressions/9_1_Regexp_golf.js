@@ -61,39 +61,63 @@ function verify(regexp, yes, no) {
   }
 }
  */
+/*
+car and cat have share 2 characters.
+So you can check that the word has 'ca' and then 'r' or 't'
+ */
 "use strict";
-verify(/car|cat/,
+verify(/ca[rt]/,
     ["my car", "bad cats"],
     ["camper", "high art"]);
-
-verify(/pop|prop/,
+/*
+Same here
+pop
+prop
+ */
+verify(/pr?op/,
     ["pop culture", "mad props"],
     ["plop", "prrrop"]);
-
-verify(/ferret|ferry|ferrari/,
+/*
+FERRet
+FERRy
+FERRari
+ */
+verify(/ferr(et|y|ari)/,
     ["ferret", "ferry", "ferrari"],
     ["ferrum", "transfer A"]);
-
-verify(/\b.+ious\b/,
+/*
+"Any word ending in ious".
+No need to check the beginning of the word
+ */
+verify(/ious\b/,
     ["how delicious", "spacious room"],
     ["ruinous", "consciousness"]);
-
-verify(/ (.|,|:|;)$/,
+/*
+There is an operator that matches single character of a set.
+ */
+verify(/ [.,:;]$/,
     ["bad punctuation ."],
     ["escape the period"]);
-
-verify(/\b\w{6,}\b/,
+/*
+No need to check the word boundaries.
+A word longer than six letters must contain 7 characters sequence
+in the beginning, middle or the end.
+ */
+verify(/\w{7}/,
     ["Siebentausenddreihundertzweiundzwanzig"],
     ["no", "three small words"]);
-
-verify(/\b[^eE]{2,}\b/,
+/*
+Why do you need {2,} here?
+What about word "I"?
+ */
+verify(/\b[^\We]+\b/i,
     ["red platypus", "wobbling nest"],
     ["earth bed", "learning ape", "BEET"]);
 
 
 function verify(regexp, yes, no) {
     // Ignore unfinished exercises
-    if (regexp.source == "...") return;
+    if (regexp.source === "...") return;
     for (let str of yes) if (!regexp.test(str)) {
         console.log(`Failure to match '${str}'`);
     }

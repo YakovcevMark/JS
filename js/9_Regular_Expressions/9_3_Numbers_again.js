@@ -22,7 +22,10 @@ for (let str of ["1a", "+-1", "1.2.3", "1+1", "1e4.5",
   }
 }
  */
-let number = /^([+-.]?\d+|\d+\.(\d+)?)(e[+-]?|E[+-]?)?(\d+)?$/;
+/*
+",1" is a valid number according to your pattern.
+ */
+let number = /^([+\-.]?\d+|\d+\.(\d+)?)(e[+-]?|E[+-]?)?(\d+)?$/;
 for (let str of ["1", "-1", "+15", "1.55", ".5", "5.",
     "1.3e2", "1E-4", "1e+12","1123.55"]) {
     if (!number.test(str)) {
@@ -30,7 +33,7 @@ for (let str of ["1", "-1", "+15", "1.55", ".5", "5.",
     }
 }
 for (let str of ["1a", "+-1", "1.2.3", "1+1", "1e4.5",
-    ".5.", "1f5", ".",""]) {
+    ".5.", "1f5", ".","",",1"]) {
     if (number.test(str)) {
         console.log(`Incorrectly accepted '${str}'`);
     }

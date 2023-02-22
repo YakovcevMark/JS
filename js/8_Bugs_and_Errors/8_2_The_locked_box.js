@@ -60,15 +60,16 @@ const box = {
         return this._content;
     }
 };
+/*
+Function box.unlock() doesn't throw errors,
+so there is no need to put it in the try-catch block.
+ */
 function withBoxUnlocked(body) {
     if (!box.locked)
         return body();
-    try{
-        box.unlock();
-        return body();
-    }finally{
-        box.lock();
-    }
+    box.unlock();
+    try { return body(); }
+    finally { box.lock(); }
 }
 withBoxUnlocked(function() {
     box.content.push("gold piece");

@@ -33,13 +33,17 @@ function primitiveMultiply(a, b) {
         throw new MultiplicatorUnitFailure("Klunk");
     }
 }
-
+/*
+"Make sure you handle only the exceptions you are trying to handle."
+Please throw the error if it is not the MultiplicatorUnitFailure.
+ */
 function reliableMultiply(a, b) {
         try {
             return primitiveMultiply(a, b);
         } catch (err) {
-            if (err instanceof MultiplicatorUnitFailure)
-                return reliableMultiply(a, b);
+            if (!(err instanceof MultiplicatorUnitFailure))
+                throw err;
+            return reliableMultiply(a, b);
         }
 }
 
