@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+    <body>
+        <div id="grid"></div>
+        <div>
+            <button id="next">Next generation</button>
+            <button id="mix">Mix</button>
+            <button id="clear">Clear</button>
+        </div>
+        <script>
+            let width = 20, height = 20;
+            let grid = document.querySelector("#grid");
+            let next = document.querySelector("#next");
+            let mix = document.querySelector("#mix");
+            let clear = document.querySelector("#clear");
+            let checkboxes = [];
+            for (let i = 0; i < height; i++) {
+                checkboxes[i] = [];
+                for (let j = 0; j < width; j++) {
+                    let input = document.createElement("input");
+                    input.type = "checkbox";
+                    grid.appendChild(input);
+                    checkboxes[i][j] = input;
+                }
+                grid.appendChild(document.createElement("br"));
+            }
+            function setRandomCheckboxes() {
+                for (let i = 0; i < height; i++)
+                    for (let j = 0; j < width; j++)
+                        if (Math.random() < 0.2)
+                            checkboxes[i][j].checked = true;
+            }
+            function clearCheckboxes() {
+                for (let i = 0; i < height; i++)
+                    for (let j = 0; j < width; j++)
+                        checkboxes[i][j].checked = false;
+            }
+            let decH = i => (i === 0) ? height : i;
+            let incH = i => (i === height -1) ? -1 : i;
+            let decW = j => (j === 0) ? width : j;
+            let incW = j => (j === width -1) ? -1 : j;
+            next.addEventListener("click", () => {
+                let newCheckboxes = [];
+                for (let i = 0; i < height; i++) {
+                    newCheckboxes[i] = [];
+                    for (let j = 0; j < width; j++) {
+                        let neighbors = 0;
+                        if (checkboxes[decH(i) - 1][j].checked) neighbors++;
+                        if (checkboxes[i][incW(j) + 1].checked) neighbors++;
+                        if (checkboxes[incH(i) + 1][j].checked) neighbors++;
+                        if (checkboxes[i][decW(j) - 1].checked) neighbors++;
+                        if (checkboxes[decH(i) - 1][incW(j) + 1].checked) neighbors++;
+                        if (checkboxes[incH(i) + 1][incW(j) + 1].checked) neighbors++;
+                        if (checkboxes[incH(i) + 1][decW(j) - 1].checked) neighbors++;
+                        if (checkboxes[decH(i) - 1][decW(j) - 1].checked) neighbors++;
+                        if (neighbors < 2 || neighbors > 3) {
+                            newCheckboxes[i][j] = false;
+                        } else if (neighbors === 2) newCheckboxes[i][j] = checkboxes[i][j].checked;
+                        else newCheckboxes[i][j] = true;
+                    }
+                }
+                for (let i = 0; i < height; i++)
+                    for (let j = 0; j < width; j++)
+                        checkboxes[i][j].checked = newCheckboxes[i][j];
+            });
+            mix.addEventListener("click", () => {
+                clearCheckboxes();
+                setRandomCheckboxes();
+            });
+            clear.addEventListener("click", () => {
+                clearCheckboxes();
+            });
+        </script>
+    </body>
+</html>
