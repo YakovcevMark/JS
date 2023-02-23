@@ -1,0 +1,80 @@
+<!--
+Write a program that draws the following shapes on a canvas:
+    1) A trapezoid (a rectangle that is wider on one side)
+    2) A red diamond (a rectangle rotated 45 degrees or ¼π radians)
+    3) A zigzagging line
+    4) A spiral made up of 100 straight line segments
+    5) A yellow star
+
+When drawing the last two, you may want to refer to the explanation of
+Math.cos and Math.sin in Chapter 14, which describes how to get
+coordinates on a circle using these functions.
+I recommend creating a function for each shape.
+Pass the position, and optionally other properties such as the
+size or the number of points, as parameters.
+The alternative, which is to hard-code numbers all over your code,
+tends to make the code needlessly hard to read and modify.
+-->
+<!DOCTYPE HTML>
+<html>
+    <body>
+    <canvas width="1000" height="800"></canvas>
+    <script>
+        let cx = document.querySelector("canvas").getContext("2d");
+        function drawTrapezoid(x = 100, y = 100) {
+            cx.beginPath();
+            cx.moveTo(x, y);
+            cx.lineTo(x + 100, y);
+            cx.lineTo(x + 75, y - 50);
+            cx.lineTo(x + 25, y - 50);
+            cx.closePath();
+            cx.stroke();
+        }
+
+        function drawDiamond(x = 250, y = 30, color = "red") {
+            cx.translate(x, y);
+            cx.fillStyle = color;
+            cx.rotate(Math.PI / 4);
+            cx.fillRect(0,0,60,60);
+            cx.rotate(Math.PI / 2);
+            cx.resetTransform();
+        }
+        function drawZigzaggingLine(x = 350, y = 30) {
+            cx.beginPath();
+            cx.moveTo(x - 30, y);
+            for (let i = 1; i <= 16; i++) {
+                let xPos = i % 2 ? x + 30: x - 30;
+                cx.lineTo(xPos, y + i * 5);
+            }
+            cx.stroke();
+        }
+        function drawSpiral(x = 400, y = 30) {
+            cx.moveTo(x, y);
+            cx.beginPath();
+            let xPos = x + 50, yPos = y + 50;
+            for (let i = 1; i <= 200; i++) {
+                let angle = i * Math.PI / 20;
+                let dist = 50 * i / 200;
+                cx.lineTo(xPos + Math.cos(angle) * dist, yPos + Math.sin(angle) * dist);
+            }
+            cx.stroke();
+        }
+        function drawStar(x = 510, y = 30) {
+            cx.moveTo(x, y);
+            cx.beginPath();
+            cx.fillStyle = "gold";
+            let xPos = x + 50, yPos = y + 50;
+            for (let i = 0; i < 9; i++) {
+                let angle = i * Math.PI / 4;
+                cx.quadraticCurveTo(xPos, yPos, xPos + Math.cos(angle) * 50, yPos + Math.sin(angle) * 50);
+            }
+            cx.fill();
+        }
+        drawTrapezoid();
+        drawDiamond();
+        drawZigzaggingLine();
+        drawSpiral();
+        drawStar();
+    </script>
+    </body>
+</html>
