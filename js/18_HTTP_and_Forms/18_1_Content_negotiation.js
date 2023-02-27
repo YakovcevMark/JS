@@ -11,11 +11,17 @@ the header named Accept to the desired media type.
 Finally, try asking for the media type application/rainbows+unicorns
 and see which status code that produces.
 */
-let url = "https://eloquentjavascript.net/author";
-let types = ["text/plain",
-             "text/html",
-             "application/json",
-             "application/rainbows+unicorns"];
+/*
+*****************************
+It's better to use const instead of let if you define something
+that won't (must not) be changed.
+*****************************
+ */
+const url = "https://eloquentjavascript.net/author";
+const types = ["text/plain",
+    "text/html",
+    "application/json",
+    "application/rainbows+unicorns"];
 
 types.forEach(item =>
     fetch(url, {headers: {accept: item}})

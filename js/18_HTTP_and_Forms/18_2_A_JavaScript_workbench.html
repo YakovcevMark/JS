@@ -22,7 +22,11 @@ to a string and display it below the text field.
         button.addEventListener("click",() => {
             try {
                 let result = Function(code.value);
-                output.textContent = result();
+                output.textContent = String(result());
+                /*
+                null or undefined values should be displayed to user also.
+                Hint: convert them to string
+                 */
             } catch(err) {
                 output.textContent = err.message;
             }

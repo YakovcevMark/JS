@@ -2,8 +2,7 @@
 /shelf/
 .idea/
 ../11_Asynchronous_Programming/
-#../11_Asynchronous_Programming/crow-tech.js
-#../11_Asynchronous_Programming/9_1_Tracking_the_scalpel.js
+/node_modules
 /workspace.xml
 # Editor-based HTTP Client requests
 /httpRequests/

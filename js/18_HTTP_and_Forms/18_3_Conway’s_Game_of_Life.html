@@ -35,34 +35,84 @@
                     for (let j = 0; j < width; j++)
                         checkboxes[i][j].checked = false;
             }
-            let decH = i => (i === 0) ? height : i;
-            let incH = i => (i === height -1) ? -1 : i;
-            let decW = j => (j === 0) ? width : j;
-            let incW = j => (j === width -1) ? -1 : j;
-            next.addEventListener("click", () => {
+            function nextStep() {
                 let newCheckboxes = [];
                 for (let i = 0; i < height; i++) {
                     newCheckboxes[i] = [];
-                    for (let j = 0; j < width; j++) {
+                    for (let j = 0; j < width; j++)
+                        newCheckboxes[i][j] = false;
+                }
+                function gameRules(i, j, neighbors) {
+                    if (neighbors < 2 || neighbors > 3) {
+                        newCheckboxes[i][j] = false;
+                    } else if (neighbors === 2) newCheckboxes[i][j] = checkboxes[i][j].checked;
+                    else newCheckboxes[i][j] = true;
+                }
+                for (let i = 1; i < height -1; i++) {
+                    for (let j = 1; j < width -1; j++) {
                         let neighbors = 0;
-                        if (checkboxes[decH(i) - 1][j].checked) neighbors++;
-                        if (checkboxes[i][incW(j) + 1].checked) neighbors++;
-                        if (checkboxes[incH(i) + 1][j].checked) neighbors++;
-                        if (checkboxes[i][decW(j) - 1].checked) neighbors++;
-                        if (checkboxes[decH(i) - 1][incW(j) + 1].checked) neighbors++;
-                        if (checkboxes[incH(i) + 1][incW(j) + 1].checked) neighbors++;
-                        if (checkboxes[incH(i) + 1][decW(j) - 1].checked) neighbors++;
-                        if (checkboxes[decH(i) - 1][decW(j) - 1].checked) neighbors++;
-                        if (neighbors < 2 || neighbors > 3) {
-                            newCheckboxes[i][j] = false;
-                        } else if (neighbors === 2) newCheckboxes[i][j] = checkboxes[i][j].checked;
-                        else newCheckboxes[i][j] = true;
+                        if (checkboxes[i - 1][j].checked) neighbors++;
+                        if (checkboxes[i][j + 1].checked) neighbors++;
+                        if (checkboxes[i + 1][j].checked) neighbors++;
+                        if (checkboxes[i][j - 1].checked) neighbors++;
+                        if (checkboxes[i - 1][j + 1].checked) neighbors++;
+                        if (checkboxes[i + 1][j + 1].checked) neighbors++;
+                        if (checkboxes[i + 1][j - 1].checked) neighbors++;
+                        if (checkboxes[i - 1][j - 1].checked) neighbors++;
+                        gameRules(i, j, neighbors);
                     }
                 }
+                function checkRightLeft(side, step) {
+                    for (let i = 1; i < height -1; i++ ) {
+                        let neighbors = 0;
+                        if (checkboxes[i - 1][side].checked) neighbors++;
+                        if (checkboxes[i - 1][side + step].checked) neighbors++;
+                        if (checkboxes[i][side + step].checked) neighbors++;
+                        if (checkboxes[i + 1][side + step].checked) neighbors++;
+                        if (checkboxes[i + 1][side].checked) neighbors++;
+                        gameRules(i, side, neighbors);
+                    }
+                }
+                function checkTopBot(side,step) {
+                    for (let j = 1; j < width -1; j++ ) {
+                        let neighbors = 0;
+                        if (checkboxes[side][j - 1].checked) neighbors++;
+                        if (checkboxes[side + step][j - 1].checked) neighbors++;
+                        if (checkboxes[side + step][j].checked) neighbors++;
+                        if (checkboxes[side + step][j + 1].checked) neighbors++;
+                        if (checkboxes[side][j + 1].checked) neighbors++;
+                        gameRules(side, j, neighbors);
+                    }
+                }
+                function checkTopAngles(angle, step) {
+                    let neighbors = 0;
+                    if (checkboxes[0][angle + step].checked) neighbors++;
+                    if (checkboxes[1][angle + step].checked) neighbors++;
+                    if (checkboxes[1][angle].checked) neighbors++;
+                    gameRules(0, angle, neighbors);
+                }
+                function checkBotAngles(angle, step) {
+                    let neighbors = 0;
+                    if (checkboxes[height - 1][angle + step].checked) neighbors++;
+                    if (checkboxes[height - 2][angle + step].checked) neighbors++;
+                    if (checkboxes[height - 2][angle].checked) neighbors++;
+                    gameRules(height - 1, 0, neighbors);
+                }
+
+                checkRightLeft(0, 1);
+                checkRightLeft(width - 1, -1);
+                checkTopBot(0,1);
+                checkTopBot(height - 1, -1);
+                checkTopAngles(0, 1);
+                checkTopAngles(width - 1, -1);
+                checkBotAngles(0, 1);
+                checkBotAngles(width - 1, -1)
+
                 for (let i = 0; i < height; i++)
                     for (let j = 0; j < width; j++)
                         checkboxes[i][j].checked = newCheckboxes[i][j];
-            });
+            }
+            next.addEventListener("click", nextStep);
             mix.addEventListener("click", () => {
                 clearCheckboxes();
                 setRandomCheckboxes();
